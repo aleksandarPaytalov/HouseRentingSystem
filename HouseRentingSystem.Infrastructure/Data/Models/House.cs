@@ -32,6 +32,7 @@ namespace HouseRentingSystem.Infrastructure.Data.Models
 
         [Required]
         [Comment("House price per month")]
+        [Column(TypeName = "decimal(18,2)")]
         //[Range(typeof(decimal), 
         //    DataConstants.HouseRentingPriceMinimum,
         //    DataConstants.HouseRentingPriceMaximum,
