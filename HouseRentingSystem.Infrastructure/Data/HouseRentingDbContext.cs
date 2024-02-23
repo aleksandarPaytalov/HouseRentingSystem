@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using HouseRentingSystem.Infrastructure.Data.Models;
+﻿using HouseRentingSystem.Infrastructure.Data.Models;
 using HouseRentingSystem.Infrastructure.Data.SeedDb;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
