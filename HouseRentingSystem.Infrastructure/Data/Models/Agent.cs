@@ -23,5 +23,7 @@ namespace HouseRentingSystem.Infrastructure.Data.Models
 
         public IdentityUser User { get; set; } = null!;
 
+        public ICollection<House> Houses { get; set; } = new List<House>();
+
     }
 }

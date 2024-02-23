@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HouseRentingSystem.Infrastructure.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(HouseRentingDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -347,15 +347,15 @@ namespace HouseRentingSystem.Infrastructure.Migrations
             modelBuilder.Entity("HouseRentingSystem.Infrastructure.Data.Models.House", b =>
                 {
                     b.HasOne("HouseRentingSystem.Infrastructure.Data.Models.Agent", "Agent")
-                        .WithMany()
+                        .WithMany("Houses")
                         .HasForeignKey("AgentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("HouseRentingSystem.Infrastructure.Data.Models.Category", "Category")
                         .WithMany("Houses")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Agent");
@@ -412,6 +412,11 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HouseRentingSystem.Infrastructure.Data.Models.Agent", b =>
+                {
+                    b.Navigation("Houses");
                 });
 
             modelBuilder.Entity("HouseRentingSystem.Infrastructure.Data.Models.Category", b =>
