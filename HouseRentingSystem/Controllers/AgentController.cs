@@ -29,6 +29,7 @@ namespace HouseRentingSystem.Controllers
 			return View(model);
 		}
 
+		[HttpPost]
 		public async Task<IActionResult> Become(BecomeAgentFormModel model)
 		{
 			return RedirectToAction(nameof(HouseController.All), "House");
