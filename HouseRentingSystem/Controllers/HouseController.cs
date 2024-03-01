@@ -1,4 +1,7 @@
-﻿using HouseRentingSystem.Core.Models.House;
+﻿using HouseRentingSystem.Attributes;
+using HouseRentingSystem.Core.Contracts;
+using HouseRentingSystem.Core.Models.House;
+using HouseRentingSystem.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +10,18 @@ namespace HouseRentingSystem.Controllers
     [Authorize]
     public class HouseController : Controller
     {
-        [AllowAnonymous]
+	    private readonly IHouseService houseService;
+
+	    private readonly IAgentService agentService;
+
+	    public HouseController(IHouseService _houseService, 
+		    IAgentService _agentService)
+	    {
+		    this.houseService = _houseService;
+		    this.agentService = _agentService;
+	    }
+
+	    [AllowAnonymous]
         [HttpGet]
         public IActionResult All()
         {
@@ -32,15 +46,38 @@ namespace HouseRentingSystem.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        [MustBeAgent]
+        public async Task<IActionResult> Add()
         {
-	        return View();
+	        var model = new HouseFormModel()
+	        {
+		        Categories = await houseService.AllCategoriesAsync()
+	        };
+
+	        return View(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add(HouseFormModel model)
+        [MustBeAgent]
+        public async Task<IActionResult> Add(HouseFormModel model)
         {
-	        return RedirectToAction(nameof(Details), new {id = 1});
+	        if (await houseService.CategoryExistsAsync(model.CategoryId) == false)
+	        {
+                ModelState.AddModelError(nameof(model.CategoryId), "");
+	        }
+
+	        if (ModelState.IsValid == false)
+	        {
+		        model.Categories = await houseService.AllCategoriesAsync();
+
+		        return View(model);
+	        }
+
+	        int? agentId = await agentService.GetAgentIdAsync(User.Id());
+
+	        int newHouseId = await houseService.CreateAsync(model, agentId ?? 0);
+
+	        return RedirectToAction(nameof(Details), new {id = newHouseId});
         }
 
         [HttpGet]
