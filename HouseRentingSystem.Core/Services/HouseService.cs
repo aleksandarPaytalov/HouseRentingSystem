@@ -1,4 +1,4 @@
-﻿using HouseRentingSystem.Core.Contracts.House;
+﻿using HouseRentingSystem.Core.Contracts;
 using HouseRentingSystem.Core.Models.Home;
 using HouseRentingSystem.Infrastructure.Common;
 using HouseRentingSystem.Infrastructure.Data.Models;
@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HouseRentingSystem.Core.Services
 {
-	public class HouseService : IHouseService
+    public class HouseService : IHouseService
 	{
 		private readonly IRepository repository;
 
