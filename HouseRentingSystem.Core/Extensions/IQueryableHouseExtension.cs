@@ -3,7 +3,7 @@ using HouseRentingSystem.Infrastructure.Data.Models;
 
 namespace System.Linq
 {
-    public static class IQueryableHouseExtension
+    public static class IQuerableHouseExtension
     {
         public static IQueryable<HouseServiceModel> ProjectToHouseServiceModel(this IQueryable<House> houses)
         {

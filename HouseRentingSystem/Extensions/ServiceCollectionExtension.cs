@@ -1,5 +1,5 @@
 ﻿using HouseRentingSystem.Core.Services;
-using HouseRentingSystem.Infrastructure.Common;
+using HouseRentingSystem.Infrastructure.Data.Common;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +14,7 @@ public static class ServiceCollectionExtension
     {
 	    services.AddScoped<IHouseService, HouseService>();
 	    services.AddScoped<IAgentService, AgentService>();
+	    services.AddScoped<IStatisticService, StatisticService>();
 
 		return services;
     }
