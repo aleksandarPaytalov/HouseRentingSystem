@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using HouseRentingSystem.Core.Enumerations;
+﻿using HouseRentingSystem.Core.Enumerations;
+using System.ComponentModel.DataAnnotations;
 
 namespace HouseRentingSystem.Core.Models.House
 {
@@ -7,14 +7,14 @@ namespace HouseRentingSystem.Core.Models.House
     {
         public int HousesPerPage { get; } = 3;
 
-        public string Category { get; init; } = string.Empty;
+        public string Category { get; init; } = null!;
 
-        [Display(Name = "Search by text")] 
-        public string SearchTerm { get; set; } = string.Empty;
+        [Display(Name = "Search by text")]
+        public string SearchTerm { get; init; } = null!;
 
-        public HouseSorting Sorting { get; set; }
+        public HouseSorting Sorting { get; init; }
 
-        public int CurrentPage { get; set; } = 1;
+        public int CurrentPage { get; init; } = 1;
 
         public int TotalHousesCount { get; set; }
 
