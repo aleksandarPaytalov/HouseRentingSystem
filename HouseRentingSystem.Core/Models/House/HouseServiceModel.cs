@@ -1,33 +1,36 @@
-﻿using System.ComponentModel.DataAnnotations;
-using HouseRentingSystem.Core.Constants;
-using HouseRentingSystem.Infrastructure.Constants;
+﻿using HouseRentingSystem.Core.Contracts;
+using System.ComponentModel.DataAnnotations;
+using static HouseRentingSystem.Core.Constants.MessageConstants;
+using static HouseRentingSystem.Infrastructure.Constants.DataConstants;
 
 namespace HouseRentingSystem.Core.Models.House
 {
-    public class HouseServiceModel
+    public class HouseServiceModel : IHouseModel
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = MessageConstants.RequiredMessage)]
-        [StringLength(DataConstants.HouseTitleMaxLength,
-            MinimumLength = DataConstants.HouseTitleMinLength,
-            ErrorMessage = MessageConstants.LengthMessage)]
+        [Required(ErrorMessage = RequiredMessage)]
+        [StringLength(HouseTitleMaxLength,
+            MinimumLength = HouseTitleMinLength,
+            ErrorMessage = LengthMessage)]
         public string Title { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = MessageConstants.RequiredMessage)]
-        [StringLength(DataConstants.HouseAddressMaxLength,
-            MinimumLength = DataConstants.HouseAddressMinLength,
-            ErrorMessage = MessageConstants.LengthMessage)]
+        [Required(ErrorMessage = RequiredMessage)]
+        [StringLength(HouseAddressMaxLength,
+            MinimumLength = HouseAddressMinLength,
+            ErrorMessage = LengthMessage)]
         public string Address { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = MessageConstants.RequiredMessage)] 
         [Display(Name = "Image URL")]
+        [Required(ErrorMessage = RequiredMessage)]
         public string ImageUrl { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = MessageConstants.RequiredMessage)]
-        [Range(typeof(decimal), DataConstants.HouseRentingPriceMinimum,
-            DataConstants.HouseRentingPriceMaximum,
-            ErrorMessage = "Price Per month must be positive number and greater than {2}")]
+        [Required(ErrorMessage = RequiredMessage)]
+        [Range(typeof(decimal),
+            HouseRentingPriceMinimum,
+            HouseRentingPriceMaximum,
+            ConvertValueInInvariantCulture = true,
+            ErrorMessage = "Price per month must be a positive number and less than {2} leva")]
         [Display(Name = "Price per Month")]
         public decimal PricePerMonth { get; set; }
 

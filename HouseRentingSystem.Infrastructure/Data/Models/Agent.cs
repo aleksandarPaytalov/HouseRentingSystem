@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using HouseRentingSystem.Infrastructure.Constants;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using static HouseRentingSystem.Infrastructure.Constants.DataConstants;
 
 namespace HouseRentingSystem.Infrastructure.Data.Models
 {
@@ -10,21 +11,21 @@ namespace HouseRentingSystem.Infrastructure.Data.Models
     public class Agent
     {
         [Key]
-        [Comment("Agent Identifier")]
+        [Comment("Agent identifier")]
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(DataConstants.AgentPhoneNumberMaxLength)]
-        [Comment("Agent phone number")]
+        [MaxLength(AgentPhoneMaxLength)]
+        [Comment("Agent's phone")]
         public string PhoneNumber { get; set; } = string.Empty;
 
         [Required]
-        [Comment("User identifier")]
+        [Comment("User Identifier")]
         public string UserId { get; set; } = string.Empty;
 
+        [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; } = null!;
 
-        public ICollection<House> Houses { get; set; } = new List<House>();
-
+        public List<House> Houses { get; set; } = new List<House>();
     }
 }

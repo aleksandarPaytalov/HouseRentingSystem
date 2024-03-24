@@ -1,15 +1,15 @@
 ﻿namespace HouseRentingSystem.Core.Contracts
 {
-	public interface IAgentService
-	{
-		Task<bool> ExistByIdAsync(string userId);
+    public interface IAgentService
+    {
+        Task<bool> ExistsByIdAsync(string userId);
 
-		Task<bool> UserWithPhoneNumberExistAsync(string phoneNumber);
+        Task<bool> UserWithPhoneNumberExistsAsync(string phoneNumber);
 
-		Task<bool> UserHasRentsAsync(string userId);
+        Task<bool> UserHasRentsAsync(string userId);
 
-		Task CreateAsync(string userId, string phoneNumber);
+        Task CreateAsync(string userId, string phoneNumber);
 
-		Task<int?> GetAgentIdAsync(string userId);
-	}
+        Task<int?> GetAgentIdAsync(string userId);
+    }
 }

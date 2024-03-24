@@ -19,15 +19,15 @@ namespace HouseRentingSystem.Core.Contracts
             string? searchTerm = null,
             HouseSorting sorting = HouseSorting.Newest,
             int currentPage = 1,
-            int HousePerPage = 1
-        );
+            int housesPerPage = 1);
 
         Task<IEnumerable<string>> AllCategoriesNamesAsync();
 
         Task<IEnumerable<HouseServiceModel>> AllHousesByAgentIdAsync(int agentId);
-        Task<IEnumerable<HouseServiceModel>>? AllHousesByUserIdAsync(string userId);
 
-        Task<bool> ExistAsync(int id);
+        Task<IEnumerable<HouseServiceModel>> AllHousesByUserId(string userId);
+
+        Task<bool> ExistsAsync(int id);
 
         Task<HouseDetailsServiceModel> HouseDetailsByIdAsync(int id);
 
@@ -35,6 +35,16 @@ namespace HouseRentingSystem.Core.Contracts
 
         Task<bool> HasAgentWithIdAsync(int houseId, string userId);
 
-        Task<HouseFormModel?> GetHouseFromModelByIdAsync(int id);
+        Task<HouseFormModel?> GetHouseFormModelByIdAsync(int id);
+
+        Task DeleteAsync(int houseId);
+
+        Task<bool> IsRentedAsync(int houseId);
+
+        Task<bool> IsRentedByIUserWithIdAsync(int houseId, string userId);
+
+        Task RentAsync(int id, string userId);
+
+        Task LeaveAsync(int houseId, string userId);
     }
 }

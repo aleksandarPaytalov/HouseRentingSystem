@@ -1,42 +1,47 @@
-﻿using System.ComponentModel.DataAnnotations;
-using HouseRentingSystem.Core.Constants;
-using HouseRentingSystem.Infrastructure.Constants;
+﻿using HouseRentingSystem.Core.Contracts;
+using System.ComponentModel.DataAnnotations;
+using static HouseRentingSystem.Core.Constants.MessageConstants;
+using static HouseRentingSystem.Infrastructure.Constants.DataConstants;
 
 namespace HouseRentingSystem.Core.Models.House
 {
-	public class HouseFormModel
-	{
-		[Required(ErrorMessage = MessageConstants.RequiredMessage)]
-		[StringLength(DataConstants.HouseTitleMaxLength,
-			MinimumLength = DataConstants.HouseTitleMinLength,
-			ErrorMessage = MessageConstants.LengthMessage)]
-		public string Title { get; set; } = string.Empty;
+    public class HouseFormModel : IHouseModel
+    {
+        [Required(ErrorMessage = RequiredMessage)]
+        [StringLength(HouseTitleMaxLength,
+            MinimumLength = HouseTitleMinLength,
+            ErrorMessage = LengthMessage)]
+        public string Title { get; set; } = null!;
 
-		[Required(ErrorMessage = MessageConstants.RequiredMessage)]
-		[StringLength(DataConstants.HouseAddressMaxLength,
-			MinimumLength = DataConstants.HouseAddressMinLength,
-			ErrorMessage = MessageConstants.LengthMessage)]
-		public string Address { get; set; } = string.Empty;
+        [Required(ErrorMessage = RequiredMessage)]
+        [StringLength(HouseAddressMaxLength,
+            MinimumLength = HouseAddressMinLength,
+            ErrorMessage = LengthMessage)]
+        public string Address { get; set; } = null!;
 
-		[Required(ErrorMessage = MessageConstants.RequiredMessage)]
-		[StringLength(DataConstants.HouseDescriptionMaxLength,
-			MinimumLength = DataConstants.HouseDescriptionMinLength,
-			ErrorMessage = MessageConstants.LengthMessage)]
-		public string Description { get; set; } = string.Empty;
+        [Required(ErrorMessage = RequiredMessage)]
+        [StringLength(HouseDescriptionMaxLength,
+            MinimumLength = HouseDescriptionMinLength,
+            ErrorMessage = LengthMessage)]
+        public string Description { get; set; } = null!;
 
-		[Required(ErrorMessage = MessageConstants.RequiredMessage)]
-		[Display(Name = "Image URL")]
-		public string ImageUrl { get; set; } = string.Empty;
+        [Required(ErrorMessage = RequiredMessage)]
+        [Display(Name = "Image URL")]
+        public string ImageUrl { get; set; } = null!;
 
-		[Required(ErrorMessage = MessageConstants.RequiredMessage)]
-		[Range(typeof(decimal), DataConstants.HouseRentingPriceMinimum,
-			DataConstants.HouseRentingPriceMaximum,
-			ErrorMessage = "Price Per month must be positive number and greater than {2}")]
-		public decimal PricePerMonth { get; set; }
+        [Required(ErrorMessage = RequiredMessage)]
+        [Range(typeof(decimal),
+            HouseRentingPriceMinimum,
+            HouseRentingPriceMaximum,
+            ConvertValueInInvariantCulture = true,
+            ErrorMessage = "Price per month must be a positive number and less than {2} leva")]
+        [Display(Name = "Price Per Month")]
+        public decimal PricePerMonth { get; set; }
 
-		[Display(Name = "Category")]
-		public int CategoryId { get; set; }
+        [Display(Name = "Category")]
+        public int CategoryId { get; set; }
 
-		public IEnumerable<HouseCategoryServiceModel> Categories { get; set; } = new List<HouseCategoryServiceModel>();
-	}
+        public IEnumerable<HouseCategoryServiceModel> Categories { get; set; } =
+            new List<HouseCategoryServiceModel>();
+    }
 }

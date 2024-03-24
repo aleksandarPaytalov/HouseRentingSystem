@@ -1,30 +1,30 @@
-﻿using HouseRentingSystem.Controllers;
-using HouseRentingSystem.Core.Contracts;
-using HouseRentingSystem.Core.Services;
-using HouseRentingSystem.Extensions;
-using Microsoft.AspNetCore.Mvc;
+﻿using HouseRentingSystem.Core.Contracts;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using HouseRentingSystem.Controllers;
+using HouseRentingSystem.Extensions;
 
 namespace HouseRentingSystem.Attributes
 {
-    public class MustBeAgentAttribute : ActionFilterAttribute
-    {
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
-            base.OnActionExecuting(context);
+	public class MustBeAgentAttribute : ActionFilterAttribute
+	{
+		public override void OnActionExecuting(ActionExecutingContext context)
+		{
+			base.OnActionExecuting(context);
 
-            IAgentService? agentService = context.HttpContext.RequestServices.GetService<IAgentService>();
+			IAgentService? agentService = context.HttpContext.RequestServices.GetService<IAgentService>();
 
-            if (agentService == null)
-            {
-                context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
-            }
+			if (agentService == null)
+			{
+				context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
+			}
 
-            if (agentService != null
-                && agentService.ExistByIdAsync(context.HttpContext.User.Id()).Result == false)
-            {
-                context.Result = new RedirectToActionResult(nameof(AgentController.Become), "Agent", null);
-            }
-        }
-    }
+			if (agentService != null
+			    && agentService.ExistsByIdAsync(context.HttpContext.User.Id()).Result == false)
+			{
+				context.Result = new RedirectToActionResult(nameof(AgentController.Become), "Agent", null);
+			}
+		}
+	}
 }
