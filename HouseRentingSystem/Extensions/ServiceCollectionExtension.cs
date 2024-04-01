@@ -1,5 +1,6 @@
 ﻿using HouseRentingSystem.Core.Services;
 using HouseRentingSystem.Infrastructure.Data.Common;
+using HouseRentingSystem.Infrastructure.Data.Models;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -34,7 +35,7 @@ public static class ServiceCollectionExtension
 
     public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
     {
-        services.AddDefaultIdentity<IdentityUser>(options =>
+        services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireNonAlphanumeric = false;
