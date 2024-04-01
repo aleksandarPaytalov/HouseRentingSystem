@@ -18,7 +18,8 @@ namespace HouseRentingSystem.Core.Services
         public async Task<StatisticServiseModel> TotalAsync()
         {
             int totalHouses = await repository.AllReadOnly<House>()
-                .CountAsync();
+	            .Where(h => h.IsApprover)
+				.CountAsync();
 
             int totalRents = await repository.AllReadOnly<House>()
                 .Where(h => h.RenterId != null)
