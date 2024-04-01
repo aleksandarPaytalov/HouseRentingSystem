@@ -44,6 +44,7 @@ public static class ServiceCollectionExtension
                 options.Password.RequireLowercase = false;
 
             })
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<HouseRentingDbContext>();
         return services;
     }

@@ -7,7 +7,9 @@ namespace HouseRentingSystem.Infrastructure.Data.SeedDb
     {
         public ApplicationUser AgentUser { get; set; }
         public ApplicationUser GuestUser { get; set; }
+        public ApplicationUser AdminUser { get; set; }
         public Agent Agent { get; set; }
+        public Agent AdminAgent { get; set; }
         public Category CottageCategory { get; set; }
         public Category SingleCategory { get; set; }
         public Category DuplexCategory { get; set; }
@@ -33,7 +35,9 @@ namespace HouseRentingSystem.Infrastructure.Data.SeedDb
                 UserName = "agent@mail.com",
                 NormalizedUserName = "agent@mail.com",
                 Email = "agent@mail.com",
-                NormalizedEmail = "agent@mail.com"
+                NormalizedEmail = "agent@mail.com",
+                FirstName = "Agent",
+                LastName = "Agentrov"
             };
 
             AgentUser.PasswordHash =
@@ -46,8 +50,26 @@ namespace HouseRentingSystem.Infrastructure.Data.SeedDb
                 NormalizedUserName = "guest@mail.com",
                 Email = "guest@mail.com",
                 NormalizedEmail = "guest@mail.com",
-                PasswordHash = hasher.HashPassword(AgentUser, "guest123")
+                FirstName = "Guest",
+                LastName = "Guestov"
             };
+
+            AgentUser.PasswordHash =
+                hasher.HashPassword(AgentUser, "guest123");
+
+            AdminUser = new ApplicationUser
+            {
+                Id = "90626cb8-eaa7-4af7-a201-4b315b16086e",
+                UserName = "admin@mail.com",
+                NormalizedUserName = "ADMIN@mail.com",
+                Email = "admin@mail.com",
+                NormalizedEmail = "ADMIN@mail.com",
+                FirstName = "Great",
+                LastName = "Admin"
+            };
+
+            AgentUser.PasswordHash =
+                hasher.HashPassword(AdminUser, "admin123");
         }
 
         private void SeedAgent()
@@ -57,6 +79,13 @@ namespace HouseRentingSystem.Infrastructure.Data.SeedDb
                 Id = 1,
                 PhoneNumber = "+359888888888",
                 UserId = AgentUser.Id
+            };
+
+            AdminAgent = new Agent()
+            {
+                Id = 3,
+                PhoneNumber = "+359888888887",
+                UserId = AdminUser.Id
             };
         }
 
