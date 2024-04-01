@@ -54,7 +54,7 @@ namespace HouseRentingSystem.Infrastructure.Data.SeedDb
                 LastName = "Guestov"
             };
 
-            AgentUser.PasswordHash =
+            GuestUser.PasswordHash =
                 hasher.HashPassword(AgentUser, "guest123");
 
             AdminUser = new ApplicationUser
@@ -68,7 +68,7 @@ namespace HouseRentingSystem.Infrastructure.Data.SeedDb
                 LastName = "Admin"
             };
 
-            AgentUser.PasswordHash =
+            AdminUser.PasswordHash =
                 hasher.HashPassword(AdminUser, "admin123");
         }
 
