@@ -1,12 +1,16 @@
 ﻿using HouseRentingSystem.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
+using static HouseRentingSystem.Infrastructure.Constants.CustomClaims;
 
 namespace HouseRentingSystem.Infrastructure.Data.SeedDb
 {
     internal class SeedData
     {
         public ApplicationUser AgentUser { get; set; }
-        public ApplicationUser GuestUser { get; set; }
+        public IdentityUserClaim<string> AgentUserClaim { get; set; }
+        public IdentityUserClaim<string> GuestUserClaim { get; set; }
+        public IdentityUserClaim<string> AdminUserClaim { get; set; }
+		public ApplicationUser GuestUser { get; set; }
         public ApplicationUser AdminUser { get; set; }
         public Agent Agent { get; set; }
         public Agent AdminAgent { get; set; }
@@ -40,6 +44,14 @@ namespace HouseRentingSystem.Infrastructure.Data.SeedDb
                 LastName = "Agentrov"
             };
 
+            AgentUserClaim = new IdentityUserClaim<string>()
+            {
+	            Id = 1,
+	            ClaimType = UserFullName,
+	            ClaimValue = "Agent Agentov",
+	            UserId = "dea12856-c198-4129-b3f3-b893d8395082"
+			};
+
             AgentUser.PasswordHash =
                  hasher.HashPassword(AgentUser, "agent123");
 
@@ -54,7 +66,15 @@ namespace HouseRentingSystem.Infrastructure.Data.SeedDb
                 LastName = "Guestov"
             };
 
-            GuestUser.PasswordHash =
+            GuestUserClaim = new IdentityUserClaim<string>()
+            {
+	            Id = 2,
+	            ClaimType = UserFullName,
+	            ClaimValue = "Guest Guestov",
+	            UserId = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e"
+			};
+
+			GuestUser.PasswordHash =
                 hasher.HashPassword(AgentUser, "guest123");
 
             AdminUser = new ApplicationUser
@@ -68,7 +88,15 @@ namespace HouseRentingSystem.Infrastructure.Data.SeedDb
                 LastName = "Admin"
             };
 
-            AdminUser.PasswordHash =
+            AdminUserClaim = new IdentityUserClaim<string>()
+            {
+	            Id = 3,
+	            ClaimType = UserFullName,
+	            ClaimValue = "Great Admin",
+	            UserId = "90626cb8-eaa7-4af7-a201-4b315b16086e"
+			};
+
+			AdminUser.PasswordHash =
                 hasher.HashPassword(AdminUser, "admin123");
         }
 
