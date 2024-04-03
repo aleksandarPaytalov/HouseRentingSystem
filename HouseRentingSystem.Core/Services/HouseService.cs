@@ -6,6 +6,7 @@ using HouseRentingSystem.Core.Models.House;
 using HouseRentingSystem.Infrastructure.Data.Common;
 using HouseRentingSystem.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace HouseRentingSystem.Core.Services
 {
@@ -271,6 +272,33 @@ namespace HouseRentingSystem.Core.Services
 				house.RenterId = null;
 				await repository.SaveChangesAsync();
 			}
+		}
+
+		public async Task ApproveHouseAsync(int houseId)
+		{
+			var house = await repository.GetByIdAsync<House>(houseId);
+
+			if (house != null && house.IsApprover == false)
+			{
+				house.IsApprover = true;
+
+				await repository.SaveChangesAsync();
+			}
+		}
+
+		public async Task<IEnumerable<HouseServiceModel>> GetUnApprovedAsync()
+		{
+			return await repository.AllReadOnly<House>()
+				.Where(h => h.IsApprover == false)
+				.Select(h => new HouseServiceModel()
+				{
+					Address = h.Address,
+					Id = h.Id,
+					ImageUrl = h.ImageUrl,
+					PricePerMonth = h.PricePerMonth,
+					Title = h.Title
+				})
+				.ToListAsync();
 		}
 
 		public async Task RentAsync(int id, string userId)
